@@ -1,24 +1,26 @@
-import logo from './logo.svg';
+import {useState} from "react";
+import {useEffect} from "react";
 import './App.css';
 
 function App() {
+  //start of api for fetching excuses
+  const [cat, setCat] =useState("")
+  const [exc, setExc] = useState("");
+  const fam =(prop)=>{
+    fetch(`https://excuser-three.vercel.app/v1/excuse/${prop}`)
+    .then((res)=>res.json())
+    .then((json)=>{setExc(json[0].excuse);setCat(json[0].category)})
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <button onClick={()=>{fam("family")}}>family</button><br />
+    <button onClick={()=>{fam("college")}}>college</button><br />
+    <button onClick={()=>{fam("party")}}>party</button><br />
+    <p>{`${cat}`}</p>
+    <p>{`${exc}`}</p>
+    </>
+   // end of api for fetching excuses
+      
   );
 }
 
